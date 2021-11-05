@@ -11,6 +11,50 @@
 
 ![агрегатор плееров Yohoho-theme](https://raw.githubusercontent.com/theme-masters/Yohoho-theme/master/6.png)
 
+## как ставить плееры без добавления фильмов на сайт?
+
+не обязательно добавить фильмы. Плееры показываются даже если этого фильма нет на сайте. главное id/title и запрос уходит напрямую к каждому api в списке плееров. на сайте не хранится ни фильм, ни данные, ничего. твой сайт - это ретранслятор на все api!!1
+
+![агрегатор плееров](https://raw.githubusercontent.com/theme-masters/Yohoho-theme/master/7.png)
+
+1. дашборд -> модуль плеер -> api
+
+```
+https://bazon.cc/api/search?token=2848f79ca09d4bbbf419bcdb464b4d11&kp=[kp_id] ~ "Базон" ~ results.0.link
+https://apicollaps.cc/list?token=eedefb541aeba871dcfc756e6b31c02e&kinopoisk_id=[kp_id] ~ "Колапс" ~ results.0.iframe_url
+https://videocdn.tv/api/short?api_token=pfp3D870PGEY3Afjti0gMtSfmn2aZqih&kinopoisk_id=[kp_id] ~ "Видеосдн" ~ data.0.iframe_src
+https://api.alloha.tv/?token=d317441359e505c343c2063edc97e7&kp=[kp_id] ~ "Алоха" ~ data.iframe
+https://api.bhcesh.me/list?token=eedefb541aeba871dcfc756e6b31c02e&kinopoisk_id=[kp_id] ~ "Бхцеш" ~ results.0.iframe_url
+https://kodikapi.com/search?token=b7cc4293ed475c4ad1fd599d114f4435&kinopoisk_id=[kp_id] ~ "Кодик" ~ results.0.link
+https://apivb.info/api/videos.json?token=5e2fe4c70bafd9a7414c4f170ee1b192&id_kp=[kp_id] ~ "Хдвб" ~ iframe_url
+https://iframe.video/api/v2/search?kp=[kp_id] ~ "Ифрейм" ~ results.path
+https://pleer.video/[kp_id].json ~ "Иви" ~ embeds.0.iframe
+https://api.themoviedb.org/3/[type]/[tmdb_id]?language=ru&append_to_response=videos&api_key=4f06fae67ddcf28e2e5b3f91193cb555 ~ "Трейлер (TMDb)" ~ videos.results.0.key <> https://www.youtube.com/embed/_VALUE_ ~ videos.results.0.key <> https://img.youtube.com/vi/_VALUE_/maxresdefault.jpg
+https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=1&key=AIzaSyDcr11tMC1PDGyLAyWP7K2XYD9FeWARPnA&q=[title] [year] трейлер ~ "Трейлер (YouTube)" ~ items.0.id.videoId <> https://www.youtube.com/embed/_VALUE_ ~ items.0.id.videoId <> https://img.youtube.com/vi/_VALUE_/maxresdefault.jpg
+```
+
+2. замени все токены своими собственными
+
+**как раздавать свои плееры всем желающим html сайтам?**
+
+- у сайта main id = кинопоиск
+
+```
+<iframe src="https://get-video-player.com/iframe/id-кинопоиск" frameborder="0" width="640" height="360">
+```
+
+- у сайта main id = imdb
+
+```
+<iframe src="https://get-video-player.com/iframe/id-imdb" frameborder="0" width="640" height="360">
+```
+
+- поиск название и год
+
+```
+<iframe src="https://get-video-player.com/iframe/123?title=Dune&year=2021" frameborder="0" width="640" height="360">
+```
+
 ## как добавить фильмы со всех балансеров (инфо скопировано [от сюда](https://enota.club/threads/kak-otvjazat-nastroit-parsing-i-video-pleer-ot-kp.3040/#post-24118))?
 
 1. Очищаете базу сайта (будут удалены все фильмы):
